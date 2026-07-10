@@ -1,0 +1,9 @@
+;; shadow-cljs build for the MEMORIZE browser host adapter (ADR-2607023200,
+;; portfolio title #7). Same layout as the other portfolio titles' browser
+;; builds.
+{:deps   {:aliases [:cljs]}
+ :builds {:app {:target     :browser
+                :output-dir "public"
+                :asset-path "."
+                :modules    {:main {:init-fn ghosthacker-memorize.web/init}}
+                :dev-http   {8300 "public"}}}}

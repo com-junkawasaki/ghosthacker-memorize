@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>GHOST HACKER: メモライズ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0f1115;
+      color: #e8e8ec;
+      font-family: -apple-system, "Hiragino Sans", sans-serif;
+    }
+    .memorize-app {
+      width: min(480px, 90vw);
+      padding: 2rem;
+      border: 1px solid #2a2d36;
+      border-radius: 12px;
+      background: #161922;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.9rem;
+    }
+    .memorize-app h1 { font-size: 1.1rem; margin: 0; letter-spacing: 0.04em; }
+    .memorize-sub { color: #7a7f8f; font-size: 0.85rem; margin: 0; }
+    .memorize-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+      width: 100%;
+    }
+    .memorize-card {
+      aspect-ratio: 3 / 4;
+      border-radius: 8px;
+      border: 1px solid #3a3f4d;
+      background: #1e2230;
+      color: inherit;
+      font-size: 0.72rem;
+      line-height: 1.2;
+      padding: 0.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      word-break: break-word;
+    }
+    .memorize-card:hover:not(:disabled) { background: #2a3040; }
+    .memorize-card.collected {
+      background: #1b3a2a;
+      border-color: #2f6b48;
+      color: #a8e6c1;
+      cursor: default;
+    }
+    .memorize-card:disabled { opacity: 0.9; }
+    .memorize-result { font-size: 1.2rem; font-weight: 700; }
+    .memorize-hint { color: #7a7f8f; font-size: 0.8rem; margin: 0; }
+    .memorize-app button.memorize-restart {
+      padding: 0.7rem 2rem;
+      border-radius: 8px;
+      border: 1px solid #3a3f4d;
+      background: #1e2230;
+      color: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="main.js"></script>
+</body>
+</html>
