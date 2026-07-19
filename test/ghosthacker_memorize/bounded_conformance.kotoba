@@ -1,0 +1,42 @@
+(ns ghosthacker-memorize.bounded-conformance
+  (:require [ghosthacker-memorize.bounded :as bounded])
+  (:export [main summary-check reject-check]))
+
+(def summary-type
+  [:record :ghosthacker-memorize/first-case-file-summary
+   [[:attempts :i64] [:pairs-collected :i64] [:total-pairs :i64]
+    [:complete-flag :i64] [:efficiency-numerator :i64]
+    [:efficiency-denominator :i64] [:grade :keyword]]])
+(def summary-result-type [:result [:alias summary-type] :keyword])
+
+(defn summary-check
+  [picks :vector-i64 attempts :i64 pairs :i64 complete-flag :i64 grade :keyword]
+  :i64
+  (match-result (bounded/play-first-case-file picks) summary-result-type
+    (ok summary
+      (if (= attempts (record-get summary-type summary :attempts))
+        (if (= pairs (record-get summary-type summary :pairs-collected))
+          (if (= complete-flag (record-get summary-type summary :complete-flag))
+            (if (= grade (record-get summary-type summary :grade)) 42 4)
+            3)
+          2)
+        1))
+    (err reason 90)))
+
+(defn reject-check [picks :vector-i64] :i64
+  (match-result (bounded/play-first-case-file picks) summary-result-type
+    (ok unexpected 1)
+    (err reason 42)))
+
+(defn main [] :i64
+  (if (= 42 (summary-check (vector-i64 0 5 1 4 2 7 3 6)
+              4 4 1 :perfect-memory))
+    (if (= 42 (summary-check (vector-i64 0 1 0 5 1 4 2 7 3 6)
+                5 4 1 :a))
+      (if (= 42 (summary-check (vector-i64 0 0 0 5 0 1 1 4 2 7 3 6)
+                  4 4 1 :perfect-memory))
+        (if (= 42 (summary-check (vector-i64 0 5) 1 1 0 :perfect-memory))
+          42 4)
+        3)
+      2)
+    1))
