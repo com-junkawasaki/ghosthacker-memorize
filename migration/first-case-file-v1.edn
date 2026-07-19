@@ -1,0 +1,35 @@
+{:schema "kotoba-ghosthacker-memorize-migration/v1"
+ :profile :ghosthacker-memorize/first-case-file-v1
+ :legacy
+ {:engine "src/ghosthacker_memorize/core.cljc"
+  :fixture "src/ghosthacker_memorize/deck.cljc"
+  :status :retained-general-oracle}
+ :canonical
+ {:engine "src/ghosthacker_memorize/bounded.kotoba"
+  :conformance "test/ghosthacker_memorize/bounded_conformance.kotoba"}
+ :domain
+ {:grid :first-case-file
+  :cards 8 :pairs 4 :maximum-turns 16
+  :pick-encoding :flat-index-pairs
+  :complete-encoding :strict-zero-or-one-i64
+  :efficiency :exact-rational-fields}
+ :excluded
+ [:arbitrary-grids :shuffle :floating-point-efficiency
+  :terminal-input :browser-state :persistence]
+ :safety
+ {:ambient-authority false :host-capabilities [] :mutable-state false
+  :fuel {:initial 512 :replenishable false}
+  :invalid-index false :unpaired-pick false :oversized-pick-list false
+  :silent-floating-point-delegation false}
+ :verification
+ {:legacy {:tests 16 :assertions 57 :failures 0 :errors 0}
+  :positive-cases [:perfect :one-miss :invalid-no-op :partial :unplayed]
+  :negative-cases [:unpaired-pick :negative-index :large-index :too-many-picks]
+  :project-digest "c9a814c77830445b1690acb012d319e96ed84b6c9114a749d07c4e2fde7a8a2a"
+  :web {:main 42 :summary-check 42 :reject-check 42
+        :artifact-sha256 "bab88f89922ce2cf9e95d592edff701a2772fa3ac60d454d59439931fe587aa0"}
+  :wasm {:main 42 :summary-check 42 :reject-check 42
+         :artifact-sha256 "da11497cfbbaa072418bbcd0e8e7a901c450b663d9a05af8a47d68b21f4507b1"}
+  :required-capabilities [] :hosted-ci :pending}
+ :cutover
+ {:bounded-profile-authorized true :general-cljc-oracle-retained true}}

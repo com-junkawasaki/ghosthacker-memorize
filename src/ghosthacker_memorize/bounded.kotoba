@@ -1,0 +1,86 @@
+(ns ghosthacker-memorize.bounded
+  (:export [play-first-case-file]))
+
+(def collected-type [:set :i64])
+(def state-type
+  [:record :ghosthacker-memorize/state
+   [[:attempts :i64] [:collected [:alias collected-type]]]])
+(def summary-type
+  [:record :ghosthacker-memorize/first-case-file-summary
+   [[:attempts :i64]
+    [:pairs-collected :i64]
+    [:total-pairs :i64]
+    [:complete-flag :i64]
+    [:efficiency-numerator :i64]
+    [:efficiency-denominator :i64]
+    [:grade :keyword]]])
+(def summary-result-type [:result [:alias summary-type] :keyword])
+
+(defn fail [reason :keyword] [:alias summary-result-type]
+  (result-err-of summary-result-type reason))
+
+(defn card-at [index :i64] :i64
+  (if (= index 0) 0
+    (if (= index 1) 1
+      (if (= index 2) 2
+        (if (= index 3) 3
+          (if (= index 4) 1
+            (if (= index 5) 0
+              (if (= index 6) 3 2))))))))
+
+(defn collected-count [state [:alias state-type]] :i64
+  (typed-set-count collected-type
+    (record-get state-type state :collected)))
+
+(defn flip [state [:alias state-type] left :i64 right :i64]
+  [:alias state-type]
+  (let [collected (record-get state-type state :collected)]
+    (if (= left right) state
+      (if (typed-set-contains collected-type collected left) state
+        (if (typed-set-contains collected-type collected right) state
+          (if (= (card-at left) (card-at right))
+            (record state-type
+              (+ (record-get state-type state :attempts) 1)
+              (typed-set-conj collected-type
+                (typed-set-conj collected-type collected left) right))
+            (record-assoc state-type state :attempts
+              (+ (record-get state-type state :attempts) 1))))))))
+
+(defn play-picks
+  [picks :vector-i64 offset :i64 state [:alias state-type]]
+  [:alias state-type]
+  (if (or (>= offset (vector-count picks)) (>= (collected-count state) 8)) state
+    (play-picks picks (+ offset 2)
+      (flip state (vector-at picks offset) (vector-at picks (+ offset 1))))))
+
+(defn grade-for [attempts :i64] :keyword
+  (if (= attempts 0) :perfect-memory
+    (if (>= 400 (* 95 attempts)) :perfect-memory
+      (if (>= 40 (* 7 attempts)) :a
+        (if (>= 8 attempts) :b
+          (if (>= 40 (* 3 attempts)) :c :d))))))
+
+(defn finish [state [:alias state-type]] [:alias summary-result-type]
+  (let [attempts (record-get state-type state :attempts)
+        collected (typed-set-count collected-type
+                    (record-get state-type state :collected))]
+    (result-ok-of summary-result-type
+      (record summary-type attempts (quot collected 2) 4 (if (>= collected 8) 1 0)
+        (if (= attempts 0) 1 4)
+        (if (= attempts 0) 1 attempts)
+        (grade-for attempts)))))
+
+(defn indices-valid? [picks :vector-i64 offset :i64] :bool
+  (if (= offset (vector-count picks)) true
+    (let [left (vector-at picks offset)
+          right (vector-at picks (+ offset 1))]
+      (if (or (< left 0) (> left 7)) false
+        (if (or (< right 0) (> right 7)) false
+          (indices-valid? picks (+ offset 2)))))))
+
+(defn play-first-case-file [picks :vector-i64] [:alias summary-result-type]
+  (if (> (vector-count picks) 32) (fail :too-many-picks)
+    (if (= (bit-and (vector-count picks) 1) 1) (fail :unpaired-pick)
+      (if (indices-valid? picks 0)
+        (finish (play-picks picks 0 (record state-type 0 (typed-set collected-type))))
+        (fail :index-out-of-range)))))

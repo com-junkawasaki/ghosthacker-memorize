@@ -67,6 +67,12 @@ clojure -M:lint
 
 `main`へのpush/PRで `.github/workflows/test.yml` が自動でテスト+lintを実行する。
 
+`src/ghosthacker_memorize/bounded.kotoba` は固定8枚の`first-case-file`と
+最大16手のflat index pair列を対象にするcapability-freeなKotobaプロファイル。
+収集集合の単調増加、無効手のno-op、完了後の停止を保持し、効率はJSの
+浮動小数へ委譲せず正確な分子/分母として返す。任意grid、shuffle、host状態は
+CLJC oracleに残す。
+
 ターミナルで遊んでみる:
 
 ```bash
