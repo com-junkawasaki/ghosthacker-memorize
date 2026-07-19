@@ -30,6 +30,11 @@
         :artifact-sha256 "bab88f89922ce2cf9e95d592edff701a2772fa3ac60d454d59439931fe587aa0"}
   :wasm {:main 42 :summary-check 42 :reject-check 42
          :artifact-sha256 "da11497cfbbaa072418bbcd0e8e7a901c450b663d9a05af8a47d68b21f4507b1"}
-  :required-capabilities [] :hosted-ci :pending}
+  :required-capabilities []
+  :hosted-ci
+  {:status :runner-billing-blocked
+   :run "https://github.com/com-junkawasaki/ghosthacker-memorize/actions/runs/29697371066"
+   :jdks [17 21] :jobs-started 0 :workflow-steps-executed 0
+   :code-failure-evidence false :reverification-required true}}
  :cutover
  {:bounded-profile-authorized true :general-cljc-oracle-retained true}}
