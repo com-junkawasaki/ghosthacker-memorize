@@ -13,8 +13,9 @@
 (def ^:private play-loop! #'terminal/play-loop!)
 
 (defn- silently [thunk]
-  (binding [*out* (java.io.StringWriter.)]
-    (thunk)))
+  (let [result (atom nil)]
+    (with-out-str (reset! result (thunk)))
+    @result))
 
 (deftest parse-pick-boundary-test
   (testing "\"i j\"形式を[i j](整数)にパースする"
