@@ -11,7 +11,7 @@
   with the state gathered so far, same posture as TUNING's play-loop!.
 
   Run: clojure -M -m ghosthacker-memorize.terminal"
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [ghosthacker-memorize.core :as core]
             [ghosthacker-memorize.deck :as deck]))
 
@@ -52,7 +52,7 @@
     (let [line (read-pick!)]
       (cond
         (nil? line) nil
-        (= (str/lower-case line) "q") nil
+        (= (str/lower line) "q") nil
         :else
         (let [pick (parse-pick line)]
           (if (nil? pick)
