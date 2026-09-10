@@ -27,7 +27,7 @@ Ghost Hacker ゲームポートフォリオ第7弾。設計は
 
 ## 実装範囲
 
-`src/ghosthacker_memorize/core.cljc` — pure、host-free。判定/state核:
+`src/ghosthacker_memorize/core.kotoba` — pure、host-free。判定/state核:
 
 - `flip-pair` — index i/jの2枚を1手番としてflipし、一致すれば両方を
   `:collected`に加え、不一致なら`:attempts`だけ進める。同一index指定・
@@ -38,15 +38,15 @@ Ghost Hacker ゲームポートフォリオ第7弾。設計は
 - `efficiency`/`grade`/`summary` — attempts対total-pairsの効率でgradeを
   決めるリザルト集計（少ない手数で全ペア揃えるほど高評価）
 
-`src/ghosthacker_memorize/deck.cljc` — サンプルの完結したグリッド
+`src/ghosthacker_memorize/deck.kotoba` — サンプルの完結したグリッド
 （`first-case-file`、8枚/4ペア、シャッフルなしの決定的配置）。
 
-**プレイ可能な最小プロトタイプ**として `src/ghosthacker_memorize/terminal.clj`
+**プレイ可能な最小プロトタイプ**として `src/ghosthacker_memorize/terminal.kotoba`
 がある。TUNINGと同じくリアルタイム判定が無いため、`future`/agentスレッド
 プールを一切使わない素朴なread-line駆動ループ（1手番で"i j"形式の2
 インデックスを一度に読み、collected済みは名前を、それ以外は"?"を表示）。
 
-**ブラウザで遊べるホストアダプタ**が `src/ghosthacker_memorize/web.cljs`
+**ブラウザで遊べるホストアダプタ**が `src/ghosthacker_memorize/web.kotoba`
 （reagent、ADR-2607023200 addendum 2の方針どおりWeb Audio不要）:
 カードグリッドをクリック可能なボタンとして描画し、1枚目のクリックだけを
 `:first-pick`としてUI側のローカル状態に保持、2枚目のクリックで両indexを

@@ -1,8 +1,8 @@
 {:schema "kotoba-ghosthacker-memorize-migration/v1"
  :profile :ghosthacker-memorize/first-case-file-v1
  :legacy
- {:engine "src/ghosthacker_memorize/core.cljc"
-  :fixture "src/ghosthacker_memorize/deck.cljc"
+ {:engine "src/ghosthacker_memorize/core.kotoba"
+  :fixture "src/ghosthacker_memorize/deck.kotoba"
   :status :retained-general-oracle}
  :canonical
  {:engine "src/ghosthacker_memorize/bounded.kotoba"
