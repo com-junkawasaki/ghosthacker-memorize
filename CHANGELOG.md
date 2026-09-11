@@ -13,7 +13,7 @@ pure `.cljc` 記憶マッチ核（`ghosthacker-memorize.core`）と、それを�
   タイプ、futureなし、"i j"形式で2インデックスを一度に受け取る）、
   `web.cljs`（ブラウザhostアダプタ、reagent、Web Audio不要、1枚目
   クリックをUIローカルの`:first-pick`として保持し2枚目で手番を確定）。
-  `clojure -M:test`（16 tests / 57 assertions）と`clojure -M:lint`
+  `kbb -M:test`（16 tests / 57 assertions）と`kbb -M:lint`
   （clj-kondo 0 errors/0 warnings）が通ることを確認済み。headless DOM
   上で実クリック操作による通し（マッチしたペアがcollected表示になる
   こと、外れたペアが手番だけ進めて状態をリセットすること、4ペア全収集
