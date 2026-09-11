@@ -10,7 +10,7 @@
   and everything else hidden behind \"?\". `q` or EOF cuts the run off
   with the state gathered so far, same posture as TUNING's play-loop!.
 
-  Run: clojure -M -m ghosthacker-memorize.terminal"
+  Run: kbb -M -m ghosthacker-memorize.terminal"
   (:require [kotoba.lang.text :as str]
             [ghosthacker-memorize.core :as core]
             [ghosthacker-memorize.deck :as deck]))
@@ -83,7 +83,7 @@
             (recur next-state)))))))
 
 (defn -main
-  "Entry point for `clojure -M -m ghosthacker-memorize.terminal`."
+  "Entry point for `kbb -M -m ghosthacker-memorize.terminal`."
   [& _args]
   (println "GHOST HACKER: メモライズ — first-case-file")
   (println "2枚のインデックスを空白区切りで入力し、同じGhostのペアを揃えてください。")
